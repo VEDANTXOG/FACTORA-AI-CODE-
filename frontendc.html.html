@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factora AI | Truth Unveiled</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;700&family=Montserrat:wght@400;700&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #141414;
+            --gold: #b19cd9;
+            --lavender: #FFFFFF;
+            --muted-gold: rgba(212, 175, 55, 0.2);
+            --white: #FFFFFF;
+        }
+
+        body,
+        html {
+            background-color: var(--bg);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* MATRIX BACKGROUND */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.12;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 70px;
+            height: 100vh;
+            background: #080808;
+            border-right: 1px solid var(--white);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            position: relative;
+        }
+
+        .sidebar:hover {
+            width: 240px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin-top: 100px;
+        }
+
+        .nav-links li {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links li p {
+            margin-left: 20px;
+            opacity: 0;
+            transition: 0.3s;
+            color: var(--gold);
+            font-family: 'Cinzel';
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .sidebar:hover li p {
+            opacity: 1;
+        }
+
+        /* TOP RIBBON */
+        .top-ribbon {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px 0 110px;
+            z-index: 900;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .tagline {
+            font-family: 'Montserrat';
+            font-size: 2.5rem;
+            color: var(--white);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        /* MAIN CONTENT SECTION */
+        .content-area {
+            flex: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 120px 40px 60px 40px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        section::-webkit-scrollbar {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        #home {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #home.active {
+            display: flex;
+        }
+
+        .logo-container {
+            text-align: center;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .logo-container img {
+            width: 220px;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .logo-container h1 {
+            font-family: 'Cinzel';
+            letter-spacing: 15px;
+            color: var(--gold);
+            font-size: 3.2rem;
+            margin: 0;
+        }
+
+        .faded-out {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        /* SEARCH BAR FIX */
+        .search-wrapper {
+            margin-top: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        #main-search {
+            width: 550px;
+            min-height: 60px;
+            height: 60px;
+            padding: 18px 35px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--white);
+            border-radius: 40px;
+            /* CURVED CORNERS */
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            text-align: center;
+            resize: none;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            line-height: 1.5;
+            box-sizing: border-box;
+            transition: border-radius 0.3s;
+        }
+
+        /* PROTOCOL BOXES (ORIGINAL STYLE) */
+        .protocol-text-box {
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+            text-align: left;
+            background: rgba(10, 10, 10, 0.8);
+            padding: 40px;
+            border: 1px solid var(--white);
+            line-height: 1.8;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .protocol-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .protocol-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--white);
+            padding-bottom: 15px;
+        }
+
+        .protocol-number {
+            color: var(--white);
+            font-family: 'Space Mono';
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .protocol-item p {
+            margin: 5px 0 5px 30px;
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="matrix-canvas"></canvas>
+
+    <nav class="sidebar">
+        <ul class="nav-links">
+            <li onclick="showSection('home')"><span>🏠</span>
+                <p>Base</p>
+            </li>
+            <li onclick="showSection('saved')"><span>🔖</span>
+                <p>Saved Articles</p>
+            </li>
+            <li onclick="showSection('daily')"><span>📡</span>
+                <p>Live Feed</p>
+            </li>
+            <li onclick="showSection('guide')"><span>📖</span>
+                <p>How It Works</p>
+            </li>
+            <li onclick="showSection('new_mode')"><span>🎓</span>
+                <p>Educational Mode</p>
+            </li>
+        </ul>
+    </nav>
+
+    <header class="top-ribbon">
+        <div class="tagline">Dissecting the Fabric of Reality</div>
+        <div class="nav-actions">
+            <button
+                style="background:transparent; border:1px solid var(--gold); color:var(--gold); padding:6px 18px; cursor:pointer; font-family:'Cinzel';"
+                onclick="alert('Progress Saved.')">SAVE</button>
+        </div>
+    </header>
+
+    <main class="content-area">
+        <section id="home" class="active">
+            <div id="main-logo-area" class="logo-container">
+                <svg width="220" height="220" viewBox="0 0 220 220" style="margin-bottom: 10px;">
+                    <circle cx="110" cy="110" r="100" fill="none" stroke="#b19cd9" stroke-width="8" opacity="0.8" />
+                    <text x="110" y="125" text-anchor="middle" font-family="Cinzel, serif" font-size="48"
+                        font-weight="700" fill="#b19cd9" letter-spacing="2"></text>
+                    <text x="110" y="165" text-anchor="middle" font-family="Cinzel, serif" font-size="32"
+                        font-weight="700" fill="#b19cd9" letter-spacing="1"></text>
+                </svg>
+                <h1>FACTORA AI</h1>
+            </div>
+            <div class="search-wrapper">
+                <textarea id="main-search" placeholder="Paste the news/article text:"
+                    oninput="autoResizer(this)"></textarea>
+            </div>
+        </section>
+
+        <section id="saved">
+            <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center;">Saved Articles
+            </h2>
+            <div class="protocol-text-box">
+                <p><strong style="color: var(--gold);" font-size="1.2rem"> Purpose:</strong> <strong
+                        style="color: var(--lavender);"> Allows User to Save and Revisit News Articles. </strong> </p>
+                <p><strong style="color: var(--gold);" font-size="1.2rem"> Description:</strong> <strong
+                        style="color: var(--lavender);"> Save Important News Articles and Analyse Results for Later
+                        References </strong> </p>
+            </div>
+        </section>
+
+        <section id="daily">
+            <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center;">Live Feed</h2>
+            <div class="protocol-text-box" style="text-align: center;">
+                <p><strong style="color: var(--gold);" font-size="1.2rem"> Purpose:</strong> <strong
+                        style="color: var(--lavender);"> To Show Top, Trending Verified News from All Around the World.
+                    </strong> </p>
+                <p><strong style="color: var(--gold);" font-size="1.2rem"> Description:</strong> <strong
+                        style="color: var(--lavender);"> Stay Updated with Latest Verified News Across Categories like
+                        World Events, Technology, Health and Science </strong> </p>
+                <p>Scanning global data streams...</p>
+                <p style="color: var(--lavender); font-family: 'Space Mono';">[ NO ANOMALIES DETECTED ]</p>
+            </div>
+        </section>
+
+        <section id="guide">
+            <h2
+                style="font-family:'Cinzel'; color:var(--white); font-size: 2.0rem; text-align: center; margin-bottom: 20px;">
+                HOW IT WORKS</h2>
+            <div class="protocol-text-box">
+                <ul class="protocol-list">
+                    <li class="protocol-item"><span class="protocol-number">◇</span> <strong
+                            style="color: var(--gold);">Checks Sources:</strong> Checks your given article from reputed
+                        sources, trusted news outlets all around the world.</li>
+                    <li class="protocol-item"><span class="protocol-number">◇</span> <strong
+                            style="color: var(--gold);">Provide Verdict:</strong> Gives you a clear verdict like real,
+                        likely, fake or suspicious.</li>
+                    <li class="protocol-item">
+                        <strong style="color: var(--gold);">WHAT ARE :</strong> <strong
+                            style="color: var(--lavender);">◇ Manipulation Score</strong>
+                        <p><strong>What it is:</strong> Measures how much article uses misleading language.</p>
+                        <p>• Analyses emotional words, urgency, exaggeration, fake authority, etc.</p>
+                        <p><strong>Score Range:</strong> 0 - 1.0</p>
+                        <p>• 0.0 - 0.3: Minimal manipulation</p>
+                    </li>
+                    <li class="protocol-item">
+                        <strong style="color: var(--lavender);">◇ Verification Score :</strong> <strong
+                            style="color: var(--white);">What It is :</strong>
+                        <p>1]Measures trust based on source reliability.</p>
+                        <p>Score range: 0.7 - 1.0 : High confidence</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="new_mode">
+            <h2
+                style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center; margin-bottom: 20px;">
+                EDUCATIONAL MODE</h2>
+            <div class="protocol-text-box">
+                <p><strong style="color: var(--gold);">Purpose:-</strong> Awareness and learning mode for students.</p>
+                <p><strong style="color: var(--gold);">What It is:-</strong> Mini-awareness campaign that teaches you
+                    how to correctly assess news.</p>
+                <p><strong style="color: var(--lavender);">What Fake News is:-</strong> Explains false news and why it
+                    spreads.</p>
+                <p><strong style="color: var(--lavender);">Daily Verification Leaderboard:-</strong> Compete by
+                    verifying news correctly.</p>
+            </div>
+            <div class="protocol-text-box" style="text-align:center;">
+                <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.2rem;">Coming Soon!!!</h2>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // THE FIX FOR SHRINKING AND FADING
+        function autoResizer(el) {
+            const logoArea = document.getElementById('main-logo-area');
+            // Fading logo
+            if (el.value.length > 0) {
+                logoArea.classList.add('faded-out');
+            } else {
+                logoArea.classList.remove('faded-out');
+            }
+
+            // Shrink/Grow logic
+            el.style.height = '60px'; // Reset to base height so it can shrink
+            let newHeight = el.scrollHeight;
+            if (newHeight > 60) {
+                el.style.height = newHeight + 'px';
+                el.style.borderRadius = "20px";
+            } else {
+                el.style.borderRadius = "40px";
+            }
+        }
+
+        // MATRIX
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.onresize = resize;
+        resize();
+
+        const drops = Array(Math.floor(canvas.width / 18)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#b19cd9";
+            ctx.font = "18px 'Space Mono'";
+
+            drops.forEach((y, i) => {
+                ctx.fillText(Math.floor(Math.random() * 2), i * 18, y * 18);
+
+                if (y * 18 > canvas.height && Math.random() > 0.98)
+                    drops[i] = 0;
+                drops[i]++;
+            });
+        }
+
+        setInterval(drawMatrix, 50);
+
+        function showSection(id) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        // Show home section on load
+        showSection('home');
+    </script>
+</body>
+
+</html>
