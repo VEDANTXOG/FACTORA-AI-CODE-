@@ -32,7 +32,6 @@
             display: flex;
         }
 
-        /* MATRIX BACKGROUND */
         #matrix-canvas {
             position: fixed;
             top: 0;
@@ -44,7 +43,6 @@
             pointer-events: none;
         }
 
-        /* SIDEBAR */
         .sidebar {
             width: 70px;
             height: 100vh;
@@ -89,7 +87,6 @@
             opacity: 1;
         }
 
-        /* TOP RIBBON */
         .top-ribbon {
             position: fixed;
             top: 0;
@@ -115,7 +112,6 @@
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
         }
 
-        /* MAIN CONTENT SECTION */
         .content-area {
             flex: 1;
             height: 100vh;
@@ -183,7 +179,6 @@
             pointer-events: none;
         }
 
-        /* SEARCH BAR FIX */
         .search-wrapper {
             margin-top: 30px;
             width: 100%;
@@ -199,7 +194,6 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--white);
             border-radius: 40px;
-            /* CURVED CORNERS */
             color: white;
             font-size: 1.1rem;
             outline: none;
@@ -212,7 +206,6 @@
             transition: border-radius 0.3s;
         }
 
-        /* PROTOCOL BOXES (ORIGINAL STYLE) */
         .protocol-text-box {
             max-width: 800px;
             margin: 0 auto 40px auto;
@@ -285,109 +278,33 @@
     <main class="content-area">
         <section id="home" class="active">
             <div id="main-logo-area" class="logo-container">
-                <svg width="220" height="220" viewBox="0 0 220 220" style="margin-bottom: 10px;">
-                    <circle cx="110" cy="110" r="100" fill="none" stroke="#b19cd9" stroke-width="8" opacity="0.8" />
-                    <text x="110" y="125" text-anchor="middle" font-family="Cinzel, serif" font-size="48"
-                        font-weight="700" fill="#b19cd9" letter-spacing="2"></text>
-                    <text x="110" y="165" text-anchor="middle" font-family="Cinzel, serif" font-size="32"
-                        font-weight="700" fill="#b19cd9" letter-spacing="1"></text>
-                </svg>
+
+                <!-- ✅ YOUR LOGO ADDED HERE -->
+                <img src="Logo design for FACTORA AI.png" alt="Factora AI Logo">
+
                 <h1>FACTORA AI</h1>
             </div>
+
             <div class="search-wrapper">
                 <textarea id="main-search" placeholder="Paste the news/article text:"
                     oninput="autoResizer(this)"></textarea>
             </div>
         </section>
 
-        <section id="saved">
-            <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center;">Saved Articles
-            </h2>
-            <div class="protocol-text-box">
-                <p><strong style="color: var(--gold);" font-size="1.2rem"> Purpose:</strong> <strong
-                        style="color: var(--lavender);"> Allows User to Save and Revisit News Articles. </strong> </p>
-                <p><strong style="color: var(--gold);" font-size="1.2rem"> Description:</strong> <strong
-                        style="color: var(--lavender);"> Save Important News Articles and Analyse Results for Later
-                        References </strong> </p>
-            </div>
-        </section>
+        <!-- rest unchanged -->
 
-        <section id="daily">
-            <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center;">Live Feed</h2>
-            <div class="protocol-text-box" style="text-align: center;">
-                <p><strong style="color: var(--gold);" font-size="1.2rem"> Purpose:</strong> <strong
-                        style="color: var(--lavender);"> To Show Top, Trending Verified News from All Around the World.
-                    </strong> </p>
-                <p><strong style="color: var(--gold);" font-size="1.2rem"> Description:</strong> <strong
-                        style="color: var(--lavender);"> Stay Updated with Latest Verified News Across Categories like
-                        World Events, Technology, Health and Science </strong> </p>
-                <p>Scanning global data streams...</p>
-                <p style="color: var(--lavender); font-family: 'Space Mono';">[ NO ANOMALIES DETECTED ]</p>
-            </div>
-        </section>
-
-        <section id="guide">
-            <h2
-                style="font-family:'Cinzel'; color:var(--white); font-size: 2.0rem; text-align: center; margin-bottom: 20px;">
-                HOW IT WORKS</h2>
-            <div class="protocol-text-box">
-                <ul class="protocol-list">
-                    <li class="protocol-item"><span class="protocol-number">◇</span> <strong
-                            style="color: var(--gold);">Checks Sources:</strong> Checks your given article from reputed
-                        sources, trusted news outlets all around the world.</li>
-                    <li class="protocol-item"><span class="protocol-number">◇</span> <strong
-                            style="color: var(--gold);">Provide Verdict:</strong> Gives you a clear verdict like real,
-                        likely, fake or suspicious.</li>
-                    <li class="protocol-item">
-                        <strong style="color: var(--gold);">WHAT ARE :</strong> <strong
-                            style="color: var(--lavender);">◇ Manipulation Score</strong>
-                        <p><strong>What it is:</strong> Measures how much article uses misleading language.</p>
-                        <p>• Analyses emotional words, urgency, exaggeration, fake authority, etc.</p>
-                        <p><strong>Score Range:</strong> 0 - 1.0</p>
-                        <p>• 0.0 - 0.3: Minimal manipulation</p>
-                    </li>
-                    <li class="protocol-item">
-                        <strong style="color: var(--lavender);">◇ Verification Score :</strong> <strong
-                            style="color: var(--white);">What It is :</strong>
-                        <p>1]Measures trust based on source reliability.</p>
-                        <p>Score range: 0.7 - 1.0 : High confidence</p>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="new_mode">
-            <h2
-                style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center; margin-bottom: 20px;">
-                EDUCATIONAL MODE</h2>
-            <div class="protocol-text-box">
-                <p><strong style="color: var(--gold);">Purpose:-</strong> Awareness and learning mode for students.</p>
-                <p><strong style="color: var(--gold);">What It is:-</strong> Mini-awareness campaign that teaches you
-                    how to correctly assess news.</p>
-                <p><strong style="color: var(--lavender);">What Fake News is:-</strong> Explains false news and why it
-                    spreads.</p>
-                <p><strong style="color: var(--lavender);">Daily Verification Leaderboard:-</strong> Compete by
-                    verifying news correctly.</p>
-            </div>
-            <div class="protocol-text-box" style="text-align:center;">
-                <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.2rem;">Coming Soon!!!</h2>
-            </div>
-        </section>
     </main>
 
     <script>
-        // THE FIX FOR SHRINKING AND FADING
         function autoResizer(el) {
             const logoArea = document.getElementById('main-logo-area');
-            // Fading logo
             if (el.value.length > 0) {
                 logoArea.classList.add('faded-out');
             } else {
                 logoArea.classList.remove('faded-out');
             }
 
-            // Shrink/Grow logic
-            el.style.height = '60px'; // Reset to base height so it can shrink
+            el.style.height = '60px';
             let newHeight = el.scrollHeight;
             if (newHeight > 60) {
                 el.style.height = newHeight + 'px';
@@ -397,7 +314,6 @@
             }
         }
 
-        // MATRIX
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -435,9 +351,91 @@
             document.getElementById(id).classList.add('active');
         }
 
-        // Show home section on load
         showSection('home');
     </script>
 </body>
 
 </html>
+<!-- ✅ RESTORED SECTIONS -->
+
+<section id="saved">
+    <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center;">Saved Articles</h2>
+    <div class="protocol-text-box">
+        <p><strong style="color: var(--gold);"> Purpose:</strong>
+            <strong style="color: var(--lavender);"> Allows User to Save and Revisit News Articles. </strong>
+        </p>
+        <p><strong style="color: var(--gold);"> Description:</strong>
+            <strong style="color: var(--lavender);"> Save Important News Articles and Analyse Results for Later
+                References </strong>
+        </p>
+    </div>
+</section>
+
+<section id="daily">
+    <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center;">Live Feed</h2>
+    <div class="protocol-text-box" style="text-align: center;">
+        <p><strong style="color: var(--gold);"> Purpose:</strong>
+            <strong style="color: var(--lavender);"> To Show Top, Trending Verified News from All Around the World.
+            </strong>
+        </p>
+        <p><strong style="color: var(--gold);"> Description:</strong>
+            <strong style="color: var(--lavender);"> Stay Updated with Latest Verified News Across Categories like
+                World Events, Technology, Health and Science </strong>
+        </p>
+        <p>Scanning global data streams...</p>
+        <p style="color: var(--lavender); font-family: 'Space Mono';">[ NO ANOMALIES DETECTED ]</p>
+    </div>
+</section>
+
+<section id="guide">
+    <h2 style="font-family:'Cinzel'; color:var(--white); font-size: 2.0rem; text-align: center; margin-bottom: 20px;">
+        HOW IT WORKS</h2>
+    <div class="protocol-text-box">
+        <ul class="protocol-list">
+            <li class="protocol-item"><span class="protocol-number">◇</span>
+                <strong style="color: var(--gold);">Checks Sources:</strong>
+                Checks your given article from reputed sources, trusted news outlets all around the world.
+            </li>
+
+            <li class="protocol-item"><span class="protocol-number">◇</span>
+                <strong style="color: var(--gold);">Provide Verdict:</strong>
+                Gives you a clear verdict like real, likely, fake or suspicious.
+            </li>
+
+            <li class="protocol-item">
+                <strong style="color: var(--gold);">WHAT ARE :</strong>
+                <strong style="color: var(--lavender);">◇ Manipulation Score</strong>
+                <p><strong>What it is:</strong> Measures how much article uses misleading language.</p>
+                <p>• Analyses emotional words, urgency, exaggeration, fake authority, etc.</p>
+                <p><strong>Score Range:</strong> 0 - 1.0</p>
+                <p>• 0.0 - 0.3: Minimal manipulation</p>
+            </li>
+
+            <li class="protocol-item">
+                <strong style="color: var(--lavender);">◇ Verification Score :</strong>
+                <strong style="color: var(--white);">What It is :</strong>
+                <p>1] Measures trust based on source reliability.</p>
+                <p>Score range: 0.7 - 1.0 : High confidence</p>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section id="new_mode">
+    <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.5rem; text-align: center; margin-bottom: 20px;">
+        EDUCATIONAL MODE</h2>
+
+    <div class="protocol-text-box">
+        <p><strong style="color: var(--gold);">Purpose:-</strong> Awareness and learning mode for students.</p>
+        <p><strong style="color: var(--gold);">What It is:-</strong> Mini-awareness campaign that teaches you how to
+            correctly assess news.</p>
+        <p><strong style="color: var(--lavender);">What Fake News is:-</strong> Explains false news and why it spreads.
+        </p>
+        <p><strong style="color: var(--lavender);">Daily Verification Leaderboard:-</strong> Compete by verifying news
+            correctly.</p>
+    </div>
+
+    <div class="protocol-text-box" style="text-align:center;">
+        <h2 style="font-family:'Cinzel'; color:var(--gold); font-size: 2.2rem;">Coming Soon!!!</h2>
+    </div>
+</section>
