@@ -49,18 +49,28 @@
 
         /* Sidebar */
         .sidebar {
-            width: 70px;
+            width: 60px;
             height: 100vh;
             background: rgba(8, 8, 8, 0.95);
             border-right: 1px solid var(--border);
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 0.3s ease;
+            overflow: hidden;
             z-index: 1000;
             position: relative;
             backdrop-filter: blur(20px);
         }
 
-        .sidebar.expanded {
-            width: 240px;
+        .sidebar:hover {
+            width: 220px;
+        }
+
+        .sidebar li p {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar:hover li p {
+            opacity: 1;
         }
 
         .nav-links {
@@ -93,15 +103,13 @@
             font-size: 0.95rem;
         }
 
-        .sidebar.expanded li p {
-            opacity: 1;
-        }
+        /* .sidebar.expanded li p { opacity: 1; } - REMOVED for pure hover */
 
         /* Header */
         .header {
             position: fixed;
             top: 0;
-            left: 70px;
+            left: 60px;
             right: 0;
             height: 80px;
             display: flex;
@@ -112,6 +120,11 @@
             backdrop-filter: blur(25px);
             z-index: 900;
             border-bottom: 1px solid var(--border);
+            transition: left 0.3s ease;
+        }
+
+        body:has(.sidebar:hover) .header {
+            left: 220px;
         }
 
         .tagline {
@@ -156,12 +169,17 @@
         /* Main Chat Area */
         .main {
             flex: 1;
-            margin-left: 70px;
+            margin-left: 60px;
             margin-top: 80px;
             height: calc(100vh - 80px);
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            transition: margin-left 0.3s ease;
+        }
+
+        body:has(.sidebar:hover) .main {
+            margin-left: 220px;
         }
 
         /* Logo Hero */
@@ -202,6 +220,8 @@
         #chat-container {
             flex: 1 1 auto;
             width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             gap: 24px;
@@ -286,6 +306,8 @@
             font-weight: 500;
             border-top-right-radius: 12px;
             box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+            max-width: none;
+            margin-right: 40px;
         }
 
         .user-avatar {
@@ -392,101 +414,80 @@
             text-align: right;
         }
 
-        /* Fixed Input Bar */
+
         .input-section {
             position: fixed;
             bottom: 0;
-            left: 70px;
+            left: 60px;
             right: 0;
-            padding: 32px 40px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(40px);
+            padding: 20px 20px 32px 20px;
+            
             border-top: 1px solid var(--border);
             z-index: 950;
-            transform: translateY(0);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .input-section.hidden {
-            opacity: 0;
-            transform: translateY(100%);
-            visibility: hidden;
-        }
-
-        .search-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            transition: left 0.3s ease;
         }
 
+        /* Sidebar hover adaptation */
+        body:has(.sidebar:hover) .input-section {
+            left: 220px;
+        }
+
+        /* Form: centered with max-width constraint */
+        #chat-form {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Container: flex relative for button positioning */
         .input-container {
             width: 100%;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
+        /* Textarea: full width of container */
         #main-search {
-            width: calc(100% - 50px);
-            height: 35px;
-            padding: 14px 25px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px solid rgba(177, 156, 217, 0.45);
-            border-radius: 28px;
-            color: var(--lavender);
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing: normal;
-            line-height: 1.5;
-            white-space: normal;
-            word-break: normal;
-            overflow-wrap: break-word;
-            text-align: left;
+            width: 750px;
+            min-height: 30px;
+            max-height: 90%;
+            padding: 12px 50px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--gold);
+            border-radius: 24px;
+            color: white;
+            font-size: 14px;
+            font-family: inherit;
             outline: none;
+            backdrop-filter: blur(15px);
             resize: none;
             overflow: hidden;
-            font-family: inherit;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(30px);
-        }
-
-        .input-section {
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-        }
-
-        .disclaimer-text {
-            background: transparent !important;
-        }
-
-        .input-section {
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-            backdrop-filter: none !important;
-        }
-
-        .input-section {
-            background: transparent;
-            padding: 10px 0;
-        }
-
-        #main-search:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(177, 156, 217, 0.3);
-            background: rgba(255, 255, 255, 0.2);
+            line-height: 1.4;
+            transition: all 0.3s ease;
         }
 
         #main-search::placeholder {
             color: rgba(255, 255, 255, 0.5);
         }
 
+        #main-search:focus,
+        #main-search:hover {
+            border-color: rgba(177, 156, 217, 0.8);
+            box-shadow: 0 0 0 4px rgba(177, 156, 217, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Send button: positioned inside input */
         .send-btn {
             position: absolute;
-            right: -2px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             width: 40px;
@@ -495,16 +496,23 @@
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.35s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 35px rgba(177, 156, 217, 0.6);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(177, 156, 217, 0.4);
+        }
+
+        .send-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #1a1a1a;
+            transition: transform 0.3s ease;
         }
 
         .send-btn:hover:not(:disabled) {
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 20px 50px rgba(177, 156, 217, 0.7);
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 8px 30px rgba(177, 156, 217, 0.6);
         }
 
         .send-btn:disabled {
@@ -513,25 +521,45 @@
             transform: translateY(-50%) scale(0.95);
         }
 
-        .send-btn svg {
-            width: 26px;
-            height: 26px;
-            fill: #1a1a1a;
-            transition: transform 0.3s ease;
-        }
-
         .send-btn.loading svg {
             transform: translateY(-50%) rotate(90deg);
         }
 
+        /* Disclaimer: centered below */
         .disclaimer-text {
             text-align: center;
-            margin-top: 24px;
-            font-size: 0.9rem;
+            margin-top: 16px;
+            font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.6);
             opacity: 0.9;
             font-style: italic;
+            max-width: 650px;
         }
+
+        /* Hidden state */
+        .input-section.hidden {
+            opacity: 0;
+            transform: translateY(100%);
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .input-section {
+                left: 0;
+                padding: 20px;
+            }
+
+            body:has(.sidebar:hover) .input-section {
+                left: 0;
+            }
+
+            #chat-form {
+                max-width: none;
+            }
+        }
+
 
         /* Section Styles */
         .section {
@@ -586,6 +614,86 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 32px;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            max-width: 900px;
+            max-height: 90vh;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.98);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(30px);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-close {
+            font-size: 2rem;
+            color: var(--gold);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(177, 156, 217, 0.2);
+            transform: scale(1.1);
+        }
+
+        #modal-full-content {
+            margin-top: 24px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .saved-article-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .saved-article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(177, 156, 217, 0.3);
         }
 
         /* Responsive */
@@ -678,6 +786,11 @@
                 <p style="text-align: center; opacity: 0.7;">Click "Analyze" on news, then "Save" to see articles here.
                     📰</p>
             </div>
+            <div style="margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); text-align: center;">
+                <strong style="color: var(--gold); font-size: 1.3rem;">Ready to dissect reality?</strong>
+                <p><button class="btn" onclick="showSection('chat')"
+                        style="margin-top: 12px; background: var(--gold); color: #000;">Start Analyzing →</button></p>
+            </div>
         </section>
 
 
@@ -687,43 +800,72 @@
             <div class="protocol-text-box">
                 <ul class="protocol-list">
                     <li class="protocol-item">
-                        <span class="protocol-number">◇</span>
-                        <strong>Checks Sources:</strong> Checks your given article from reputed sources, trusted news
-                        outlets all around the world.
+                        <span class="protocol-number">1</span>
+                        <strong>Factora AI Overview</strong>
+                        <p>Factora AI is your personal truth detector. Trained on millions of news patterns, it dissects
+                            articles for manipulation techniques, source credibility, and factual signals. Backend
+                            powered by Django analyzer using NLP models for real-time verdicts.</p>
                     </li>
                     <li class="protocol-item">
-                        <span class="protocol-number">◇</span>
-                        <strong>Provide Verdict:</strong> Gives you a clear verdict like Real, Likely, Fake or
-                        Suspicious.
+                        <span class="protocol-number">2</span>
+                        <strong>Analysis Process</strong>
+                        <p><strong>Step 1:</strong> You paste news → Frontend sends to /analyze/ API.</p>
+                        <p><strong>Step 2:</strong> Backend (news_analyzer/views.py) processes text: source matching,
+                            lang analysis, credibility scoring.</p>
+                        <p><strong>Step 3:</strong> Returns verdict, scores, reasons, category in JSON.</p>
+                        <p><strong>Step 4:</strong> UI renders verdict badge, stat bars, explanations.</p>
                     </li>
                     <li class="protocol-item">
-                        <span class="protocol-number">◇</span>
-                        <strong>Learn While Checking:</strong> Offers insight into why the article may be misleading and
-                        highlights primary signals.
+                        <span class="protocol-number">3</span>
+                        <strong>Verdict Types</strong>
+                        <p>• <strong>Real</strong> (Green): High credibility, reputable sources, factual lang. 🟢</p>
+                        <p>• <strong>Likely Real</strong>: Good signals but some uncertainty. 🟡</p>
+                        <p>• <strong>Suspicious</strong>: Mixed signals, watch scores. ⚠️</p>
+                        <p>• <strong>Fake</strong> (Red): Manipulation detected. 🔴</p>
                     </li>
                     <li class="protocol-item">
-                        <strong style="color: var(--gold);">WHAT ARE:</strong>
-                        <strong>◇ Manipulation Score</strong>
-                        <p><strong>What it is:</strong> Measures how much article uses misleading language.</p>
-                        <p>• Analyses emotional words, urgency, exaggeration, fake authority, etc.</p>
-                        <p><strong>Score Range:</strong> 0 - 100%</p>
-                        <p>• 0-30%: Minimal manipulation</p>
-                        <p>• 40-60%: Some manipulation (Stay cautious)</p>
-                        <p>• 70-100%: High manipulation</p>
+                        <span class="protocol-number">4</span>
+                        <strong>◇ Manipulation Score (Detailed)</strong>
+                        <p><strong>Detects:</strong> Emotional triggers ("crisis!"), urgency ("now!"), exaggeration
+                            ("biggest ever"), fake authority ("experts say").</p>
+                        <p><strong>Example:</strong> "SHOCKING: World ends tomorrow!" → 95% manipulation.</p>
+                        <p><strong>0-30%:</strong> Clean • <strong>70%+:</strong> Highly suspect.</p>
                     </li>
                     <li class="protocol-item">
-                        <strong>◇ Verification Score:</strong>
-                        <p><strong>What it is:</strong> Measures how much Factora AI can trust the news based on source
-                            reliability and contextual evidence.</p>
-                        <p>• Checks for respectable sources, authority phrases and factual reporting cues.</p>
-                        <p><strong>Score Range:</strong> 0 - 100%</p>
-                        <p>• 0-30%: Low Confidence</p>
-                        <p>• 40-60%: Medium Confidence</p>
-                        <p>• 70-100%: High confidence</p>
+                        <span class="protocol-number">5</span>
+                        <strong>◇ Credibility Score (Detailed)</strong>
+                        <p><strong>Verifies:</strong> Known outlets (BBC, Reuters), fact-check links, balanced phrasing.
+                        </p>
+                        <p><strong>Example:</strong> "Per Reuters: ..." → 92% credibility.</p>
+                        <p><strong>70%+:</strong> Trustworthy • <strong>
+                                <30%:< /strong> Dubious source.</p>
                     </li>
                     <li class="protocol-item">
-                        <strong>Primary Signal:</strong> Shows the main type of manipulation or attention catching
-                        techniques detected.
+                        <span class="protocol-number">6</span>
+                        <strong>Primary Signal + Category</strong>
+                        <p>Flags top issue: "Emotional Bait", "Source Unknown", "Exaggeration". Category: Politics,
+                            Health, Tech, etc.</p>
+                    </li>
+                    <li class="protocol-item">
+                        <span class="protocol-number">7</span>
+                        <strong>Usage Tips</strong>
+                        <p>• Paste full article or headline + link.</p>
+                        <p>• Save reliable analysis (⭐ button).</p>
+                        <p>• Educational mode teaches patterns.</p>
+                        <p>• Always cross-verify critical news.</p>
+                    </li>
+                    <li class="protocol-item">
+                        <span class="protocol-number">8</span>
+                        <strong>Educational Mode</strong>
+                        <p>Coming: Interactive lessons, daily challenges, leaderboard. Learn to spot fakes like a pro!
+                            🎓</p>
+                    </li>
+                    <li class="protocol-item"
+                        style="text-align: center; border-top: 1px solid var(--border); padding-top: 20px;">
+                        <strong style="color: var(--gold); font-size: 1.3rem;">Ready to dissect reality?</strong>
+                        <p><button class="btn" onclick="showSection('chat')"
+                                style="margin-top: 12px; background: var(--gold); color: #000;">Start Analyzing
+                                →</button></p>
                     </li>
                 </ul>
             </div>
@@ -744,21 +886,44 @@
                     <li>• Daily news for students + verification leaderboard (game-like learning).</li>
                 </ul>
                 <p><strong style="color: var(--gold);">Coming Soon!</strong></p>
+                <div
+                    style="margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--border); text-align: center;">
+                    <strong style="color: var(--gold); font-size: 1.3rem;">Ready to dissect reality?</strong>
+                    <p><button class="btn" onclick="showSection('chat')"
+                            style="margin-top: 12px; background: var(--gold); color: #000;">Start Analyzing →</button>
+                    </p>
+                </div>
             </div>
         </section>
     </main>
 
+    <!-- Saved Article Detail Modal -->
+    <div id="article-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-news-id" style="color:var(--gold);font-family:'Cinzel',serif;font-size:1.8rem;">Loading...
+                </h3>
+                <button onclick="closeModal()" class="modal-close" title="Close">×</button>
+            </div>
+            <div id="modal-analysis" style="padding: 0 30px 30px;"></div>
+            <div id="modal-full-content"></div>
+        </div>
+    </div>
+
     <!-- Fixed Bottom Input -->
     <div class="input-section">
-        <div class="input-container">
-            <textarea id="main-search" placeholder="Paste news article, say 'hi', or ask about reality..."
-                oninput="handleInput(this)" onkeydown="handleEnter(event)"></textarea>
-            <button class="send-btn" onclick="analyzeNews()" id="send-btn">
-                <svg viewBox="0 0 24 24">
-                    <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
-                </svg>
-            </button>
-        </div>
+        <form id="chat-form">
+
+            <div class="input-container">
+                <textarea id="main-search" placeholder="Paste news article, say 'hi', or ask about reality..."
+                    oninput="handleInput(this)" onkeydown="handleEnter(event)"></textarea>
+                <button class="send-btn" type="submit" id="send-btn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
+                    </svg>
+                </button>
+            </div>
+        </form>
         <div class="disclaimer-text">
             FACTORA AI analyzes patterns. Verify important information independently.
         </div>
@@ -766,13 +931,10 @@
 
     <script>
         // Init
-        const sidebar = document.getElementById('sidebar');
-        sidebar.addEventListener('mouseenter', () => sidebar.classList.add('expanded'));
-        sidebar.addEventListener('mouseleave', () => sidebar.classList.remove('expanded'));
+        // Sidebar hover handled by CSS
 
         function showSection(id) {
             console.log('Switched to section:', id);
-            sidebar.classList.add('expanded');
 
             // Switch sections
             document.querySelectorAll('.section').forEach(section => {
@@ -802,7 +964,7 @@
                 loadSavedArticles();
             }
 
-            // Persist
+            // Persist section only (no sidebar state)
             localStorage.setItem('activeSection', id);
         }
 
@@ -829,10 +991,10 @@
             articles.forEach(article => {
                 const vClass = article.verdict?.toLowerCase() || 'suspicious';
                 html += `
-                    <div style="background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;backdrop-filter:blur(10px);">
+                    <div class="saved-article-card" data-uid="${article.uid}" onclick="showArticleDetail('${article.uid}')" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;backdrop-filter:blur(10px);">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
                             <span class="verdict-badge verdict-${vClass}" style="font-size:1.1rem;padding:10px 20px;">${article.verdict}</span>
-                            <button onclick="deleteArticle('${article.uid}')" style="background:rgba(248,113,113,0.2);border:1px solid #f87171;color:#f87171;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1rem;opacity:0.9;" title="Delete">🗑</button>
+                            <button onclick="deleteArticle('${article.uid}');event.stopPropagation();" style="background:rgba(248,113,113,0.2);border:1px solid #f87171;color:#f87171;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1rem;opacity:0.9;" title="Delete">🗑</button>
                         </div>
                         <div style="font-size:0.95rem;line-height:1.5;margin-bottom:12px;color:rgba(255,255,255,0.9);">${article.snippet}</div>
                         <div style="font-size:0.8rem;color:var(--gold);opacity:0.8;">${article.news_id} • ${new Date(article.created_at).toLocaleDateString()}</div>
@@ -997,74 +1159,77 @@
             const text = input.value.trim();
             const btn = document.getElementById('send-btn');
 
-            console.log('🔥 Button clicked');
-            console.log("Sending request...");
-            console.log('🔥 analyzeNews() triggered with:', text);
+            console.log('🔥 analyzeNews() triggered:', { length: text.length, first20: text.substring(0, 20) });
 
             if (!text) {
                 input.focus();
                 return;
             }
 
+            // DISABLE INPUT during request to prevent double-submit/reload
+            input.disabled = true;
+            input.placeholder = 'Analyzing...';
+
             // Add user message
             createMessage(escapeHtml(text), true);
             currentNewsText = text;
             input.value = '';
-            autoResize(input);
 
             // Loading state
             btn.disabled = true;
             btn.classList.add('loading');
-            btn.title = 'Analyzing...';
+            btn.title = 'Analyzing news patterns...';
 
             try {
-                console.log('📡 Sending fetch to backend...');
+                console.log('📡 Fetching: http://127.0.0.1:8000/analyze/');
                 const res = await fetch('http://127.0.0.1:8000/analyze/', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify({ text })
                 });
 
-                console.log('📥 Backend response status:', res.status);
+                console.log('📥 Response:', { status: res.status, statusText: res.statusText, ok: res.ok });
+
+                // Log response headers for debugging
+                console.log('Headers:', [...res.headers.entries()]);
 
                 if (!res.ok) {
-                    throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                    const errorText = await res.text();
+                    console.error('❌ Error response body:', errorText);
+                    throw new Error(`HTTP ${res.status}: ${res.statusText}. Body: ${errorText.substring(0, 200)}`);
                 }
 
                 const data = await res.json();
-                console.log('✅ Backend data received:', data);
+                console.log('✅ JSON data:', data);
+                createAnalysisResponse(data);
+                currentAnalysis = data;
 
-                // Robust parsing fallback
-                const parsedData = data.type ? data : {
-                    verdict: data['1. Verdict'] || 'Analyzing...',
-                    reason: data['2. Reason'] || '',
-                    sources: data['3. Sources'] || '',
-                    manipulation_score: parseFloat(data['4. Scores']?.['Manipulation Score'] || 50),
-                    credibility_score: parseFloat(data['4. Scores']?.['Verification Score'] || 50)
-                };
-
-                console.log("Parsed response:", parsedData);
-                parsedData.content = currentNewsText;
-                createAnalysisResponse(parsedData);
-                currentAnalysis = parsedData;
             } catch (error) {
-                console.error('❌ Fetch error:', error);
-                createMessage(`<div style="color: #f87171; font-weight: 600;">❌ Connection failed: ${error.message}<br><small>Is backend running? Run: cd factora_backend && python manage.py runserver</small></div>`, false);
+                console.error('💥 Full error:', error);
+                const errorMsg = error.message.includes('Failed to fetch')
+                    ? 'Backend not running (python manage.py runserver)'
+                    : error.message;
+                createMessage(`<div style="color: #f87171; font-weight: 600;">❌ ${errorMsg}</div>`, false);
             } finally {
+                // RE-ENABLE safely
+                input.disabled = false;
+                input.placeholder = 'Paste news article, say "hi", or ask about reality....';
                 btn.disabled = false;
                 btn.classList.remove('loading');
                 btn.title = 'Send';
-                input.focus();
-                // Final scroll after full exchange
-                setTimeout(scrollToBottom, 100);
+                setTimeout(() => input.focus(), 100);
+                scrollToBottom();
             }
         }
 
         // saveChat() implemented for manual save
 
         function saveChat() {
-            if (!currentAnalysis || !currentNewsText) {
-                showToast('Please analyze news first!');
+            if (!currentAnalysis?.verdict || currentAnalysis.type === 'greeting' || currentAnalysis.type === 'question' || currentAnalysis.type === 'founder') {
+                showToast('Only save news analysis results! 👇 Use manual Save button after analyzing news.');
                 return;
             }
             const saveBtn = Array.from(document.querySelectorAll('.btn')).find(btn => btn.textContent.includes('Save'));
@@ -1075,7 +1240,10 @@
             fetch('http://127.0.0.1:8000/save-article/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(currentAnalysis)
+                body: JSON.stringify({
+                    ...currentAnalysis,
+                    content: currentNewsText  // Ensure content is sent
+                })
             })
                 .then(res => {
                     if (!res.ok) throw new Error(res.statusText);
@@ -1129,12 +1297,75 @@
         }
 
 
+        // Modal functions
+        function closeModal() {
+            document.getElementById('article-modal').style.display = 'none';
+        }
+
+        async function showArticleDetail(uid) {
+            const modal = document.getElementById('article-modal');
+            const newsIdEl = document.getElementById('modal-news-id');
+            const analysisEl = document.getElementById('modal-analysis');
+            const contentEl = document.getElementById('modal-full-content');
+
+            modal.style.display = 'flex';
+            newsIdEl.textContent = 'Loading...';
+            analysisEl.innerHTML = '<p style="text-align:center;opacity:0.6;">Loading analysis...</p>';
+
+            try {
+                const res = await fetch(`http://127.0.0.1:8000/article/${uid}/`);
+                if (!res.ok) throw new Error('Article not found');
+                const data = await res.json();
+
+                newsIdEl.textContent = data.news_id;
+                analysisEl.innerHTML = createModalAnalysisHtml(data);
+                contentEl.textContent = data.content || 'No content available';
+            } catch (e) {
+                newsIdEl.textContent = 'Error';
+                analysisEl.innerHTML = `<p style="color:#f87171;text-align:center;">Failed to load: ${e.message}</p>`;
+            }
+        }
+
+        function createModalAnalysisHtml(data) {
+            const vClass = (data.verdict || 'suspicious').toLowerCase();
+            const m = Math.round((data.manipulation_score || 0.5) * 100);
+            const c = Math.round((data.credibility_score || 0.5) * 100);
+            return `
+                <div class="verdict-badge verdict-${vClass}" style="margin-bottom:24px;">${escapeHtml(data.verdict || 'N/A')}</div>
+                ${data.category ? `<div class="category-tag" style="margin:20px 0;">${escapeHtml(data.category)}</div>` : ''}
+                ${data.sources ? `<div style="margin:24px 0;opacity:0.9;line-height:1.7;"><strong>Sources:</strong> ${escapeHtml(data.sources)}</div>` : ''}
+                ${data.reason ? `<div style="margin-bottom:32px;opacity:0.9;line-height:1.7;"><strong>Analysis:</strong><br>${escapeHtml(data.reason)}</div>` : ''}
+                <div class="stat-row" style="margin:16px 0;">
+                    <div class="stat-label">Manipulation</div>
+                    <div class="stat-bar"><div class="stat-fill manipulation" style="width:${m}%"></div></div>
+                    <div class="stat-value">${m}%</div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-label">Credibility</div>
+                    <div class="stat-bar"><div class="stat-fill credibility" style="width:${c}%"></div></div>
+                    <div class="stat-value">${c}%</div>
+                </div>
+            `;
+        }
+
+        // Close modal on outside click
+        document.addEventListener('click', (e) => {
+            const modal = document.getElementById('article-modal');
+            if (e.target === modal) closeModal();
+        });
+
         function escapeHtml(text) {
             const map = { '&': '&amp;', '<': '<', '>': '>', '"': '"', "'": '&#039;' };
             return text.replace(/[&<>"']/g, m => map[m]);
         }
 
         // Init focus and section visibility
+        // Prevent form submission
+        document.getElementById('chat-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            analyzeNews();
+        });
+
         window.addEventListener('load', () => {
             const activeSection = localStorage.getItem('activeSection') || 'chat';
             showSection(activeSection);
